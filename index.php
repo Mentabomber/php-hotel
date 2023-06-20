@@ -40,49 +40,12 @@ $hotels = [
     
 
 ];
+// if (foreach($hotels as $hotel){
 
-// echo "<pre>";
-// var_dump($hotels);
-// echo "<pre>";
-
-
-// echo'   <form action="">
-
-//             <label for=""></label>
-//             <input type="text">
-//             <input type="text">
-
-//         </form>
-
-//             <table class="table">
-//                 <thead class="table-light">
-//                     <tr>';
-//                     foreach ($hotels as $hotel) {
-//                         echo '<th scope="col">' . array_keys($hotel) . '</th>';
-//                     }; 
-// echo '              </tr>
-//                 </thead>
-//                 <tbody>
-//                     <tr>
-//                         <th scope="row">1</th>
-//                         <td>Mark</td>
-//                         <td>Otto</td>
-//                         <td>@mdo</td>
-//                     </tr>
-//                     <tr>
-//                         <th scope="row">2</th>
-//                         <td>Jacob</td>
-//                         <td>Thornton</td>
-//                         <td>@fat</td>
-//                     </tr>
-//                     <tr>
-//                         <th scope="row">3</th>
-//                         <td colspan="2">Larry the Bird</td>
-//                         <td></td>
-//                     </tr>
-//                 </tbody>
-//             </table>
-//         ';
+// }) {
+//     # code...
+// }
+// $_GET('search');
 ?>
 
 
@@ -98,12 +61,10 @@ $hotels = [
 <body>
 <form action="">
 
-<label for=""></label>
-<input type="text">
-<input type="text">
-
-</form>
-
+<label for="search">Filtra per possibilità parcheggio:</label>
+<input type="checkbox" name="parcheggio-si" value="checked">
+<br>
+<input type="submit" value="SEARCH">
 <table class="table">
   
 <thead class="table-light">
@@ -126,28 +87,56 @@ $hotels = [
 <tbody>
 
     <?php 
+    var_dump($_GET);
+    if ($_GET == [] || $_GET["parcheggio-si"] == ""){
+        foreach ($hotels as $hotel) {
+
+            echo '<tr>' . 
+                    '<th>' . 
     
+                                ($hotel['name']) . 
+            
+                    '</th>' . 
+                    '<td>' .    ($hotel['description']) . '</td>' .
+                    '<td>' .    ($hotel['parking']) . '</td>' .
+                    '<td>' .    ($hotel['vote']) . '</td>' .
+                    '<td>' .    ($hotel['distance_to_center']) .
+            
+                '</tr>';  
 
-    foreach ($hotels as $hotel) {
-                        var_dump($hotel['name']);
-                        echo '<tr>' . 
-                                '<th>' . 
-                
-                                            ($hotel['name']) . 
-                        
-                                '</th>' . 
-                                '<td>' .    ($hotel['description']) . '</td>' .
-                                '<td>' .    ($hotel['parking']) . '</td>' .
-                                '<td>' .    ($hotel['vote']) . '</td>' .
-                                '<td>' .    ($hotel['distance_to_center']) .
-                        
-                            '</tr>';  
+        }; 
+    }
+    
+    else{
+        
+        foreach ($hotels as $hotel) {
+            if ($hotel['parking']) {
+                echo '<tr>' . 
+                '<th>' . 
 
-                    }; 
+                            ($hotel['name']) . 
+        
+                '</th>' . 
+                '<td>' .    ($hotel['description']) . '</td>' .
+                '<td>' .    ($hotel['parking']) . '</td>' .
+                '<td>' .    ($hotel['vote']) . '</td>' .
+                '<td>' .    ($hotel['distance_to_center']) .
+        
+            '</tr>';  
+            }
+            else{}
+
+
+        }; 
+    }
+
                     ?>
    
 </tbody>
 </table>
+</form>
+
+
 
 
 </body>
