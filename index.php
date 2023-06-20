@@ -62,7 +62,9 @@ $hotels = [
 <form action="">
 
 <label for="search">Filtra per possibilità parcheggio:</label>
-<input type="checkbox" name="parcheggio-si" value="checked">
+<input type="checkbox" name="parcheggio-si">
+<br>
+<input type="text" name="voto">
 <br>
 <input type="submit" value="SEARCH">
 <table class="table">
@@ -88,7 +90,8 @@ $hotels = [
 
     <?php 
     var_dump($_GET);
-    if ($_GET == [] || $_GET["parcheggio-si"] == ""){
+    
+    if ($_GET == [] || $_GET["parcheggio-si"] == ""  && $_GET["voto"] == ""){
         foreach ($hotels as $hotel) {
 
             echo '<tr>' . 
@@ -106,9 +109,25 @@ $hotels = [
 
         }; 
     }
-    
-    else{
+    elseif ($_GET["parcheggio-si"] == "" && $_GET["voto"] !== "") {
+        foreach ($hotels as $hotel) {
+            if ($hotel['vote'] >= $_GET["voto"]) {
+                echo '<tr>' . 
+                '<th>' . 
+
+                            ($hotel['name']) . 
         
+                '</th>' . 
+                '<td>' .    ($hotel['description']) . '</td>' .
+                '<td>' .    ($hotel['parking']) . '</td>' .
+                '<td>' .    ($hotel['vote']) . '</td>' .
+                '<td>' .    ($hotel['distance_to_center']) .
+        
+            '</tr>';  
+            }
+        }; 
+    }
+    elseif ($_GET["parcheggio-si"] !== "" && $_GET["voto"] == "") {
         foreach ($hotels as $hotel) {
             if ($hotel['parking']) {
                 echo '<tr>' . 
@@ -124,11 +143,67 @@ $hotels = [
         
             '</tr>';  
             }
-            else{}
-
-
         }; 
     }
+    else{
+        
+        foreach ($hotels as $hotel) {
+            if ($hotel['parking'] && $hotel['vote'] >= $_GET["voto"]) {
+                echo '<tr>' . 
+                '<th>' . 
+
+                            ($hotel['name']) . 
+        
+                '</th>' . 
+                '<td>' .    ($hotel['description']) . '</td>' .
+                '<td>' .    ($hotel['parking']) . '</td>' .
+                '<td>' .    ($hotel['vote']) . '</td>' .
+                '<td>' .    ($hotel['distance_to_center']) .
+        
+            '</tr>';  
+            }
+        }; 
+    };
+
+
+    // if ($_GET == [] || $_GET["voto"] == "") {
+    //     foreach ($hotels as $hotel) {
+           
+    //             echo '<tr>' . 
+    //             '<th>' . 
+
+    //                         ($hotel['name']) . 
+        
+    //             '</th>' . 
+    //             '<td>' .    ($hotel['description']) . '</td>' .
+    //             '<td>' .    ($hotel['parking']) . '</td>' .
+    //             '<td>' .    ($hotel['vote']) . '</td>' .
+    //             '<td>' .    ($hotel['distance_to_center']) .
+        
+    //         '</tr>';  
+            
+
+    //     }; 
+    // }
+    // else {
+    //     foreach ($hotels as $hotel) {
+    //         if ($hotel['vote'] >= $_GET["voto"] ) {
+    //             echo '<tr>' . 
+    //             '<th>' . 
+
+    //                         ($hotel['name']) . 
+        
+    //             '</th>' . 
+    //             '<td>' .    ($hotel['description']) . '</td>' .
+    //             '<td>' .    ($hotel['parking']) . '</td>' .
+    //             '<td>' .    ($hotel['vote']) . '</td>' .
+    //             '<td>' .    ($hotel['distance_to_center']) .
+        
+    //         '</tr>';  
+    //         }
+
+    //     }; 
+    // }
 
                     ?>
    
